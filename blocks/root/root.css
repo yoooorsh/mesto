@@ -1,9 +1,11 @@
 .root {
   background-color: black;
-  padding: 0 200px;
+  padding: 45px 200px 60px;
   max-width: 1280px;
   margin: auto;
   font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 18px;
+  color: white;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
