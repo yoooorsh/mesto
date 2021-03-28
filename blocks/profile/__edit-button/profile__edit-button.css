@@ -11,3 +11,7 @@
   margin-top: 7px;
   grid-area: edit-button;
 }
+
+.profile__edit-button:hover {
+  opacity: 0.5;
+}

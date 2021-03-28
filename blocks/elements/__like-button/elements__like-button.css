@@ -1,0 +1,10 @@
+.elemеnts__like-button {
+  width: 20px;
+  height: 18px;
+  margin-top: 5px;
+  /* background-image: url('../../../images/like_icon.svg'); */
+}
+
+.elemеnts__like-button:hover {
+  opacity: 0.5;
+}

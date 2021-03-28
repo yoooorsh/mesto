@@ -9,3 +9,7 @@
   border-radius: 2px;
   box-sizing: border-box;
 }
+
+.profile__add-button:hover {
+  opacity: 0.5;
+}
