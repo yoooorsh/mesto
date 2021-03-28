@@ -3,4 +3,5 @@
   line-height: 48px;
   font-weight: 500;
   margin: 0;
+  grid-area: name;
 }
