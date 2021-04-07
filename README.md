@@ -21,4 +21,4 @@
 
 **Где посмотреть**
 
-Вы можете [посмотреть проект](https://yoooorsh.github.io/mesto/) на GitHub.
+Вы можете [посмотреть проект](https://yoooorsh.github.io/mesto/index.html) на GitHub.
