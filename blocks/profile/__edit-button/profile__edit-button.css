@@ -9,10 +9,11 @@
   box-sizing: border-box;
   margin-top: 7px;
   grid-area: edit-button;
+  transition: opacity .1s linear;
 }
 
 .profile__edit-button:hover {
-  opacity: .5;
+  opacity: .6;
   cursor: pointer;
 }
 

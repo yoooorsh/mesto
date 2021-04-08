@@ -17,74 +17,72 @@
           <img class="profile__photo" src="./images/avatar.jpg" alt="Фото профиля">
         </div>
         <div class="profile__info">
-          <p class="profile__name">Жак-Ив Кусто</p>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__profession">Исследователь океана</p>
-          <button class="profile__edit-button"></button>
+          <button class="profile__edit-button" type="button"></button>
         </div>
       </div>
-      <button class="profile__add-button"></button>
+      <button class="profile__add-button" type="button"></button>
     </section>
     <section class="elements">
       <div class="elements__element">
         <img class="elements__photo" src="./images/kirill-pershin-karachaevsk.png" alt="Карачаевск. Фото Кирилла Першина">
         <div class="elements__description">
-          <p class="elements__name">Карачаевск</p>
-          <div class="elements__like-button"></div>
+          <h2 class="elements__name">Карачаевск</h2>
+          <button class="elements__like-button" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img class="elements__photo" src="./images/kirill-pershin-elbrus.png" alt="Гора Эльбрус. Фото Кирилла Першина">
         <div class="elements__description">
-          <p class="elements__name">Гора Эльбрус</p>
-          <div class="elements__like-button"></div>
+          <h2 class="elements__name">Гора Эльбрус</h2>
+          <button class="elements__like-button" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img class="elements__photo" src="./images/kirill-pershin-dombay.png" alt="Домбай. Фото Кирилла Першина">
         <div class="elements__description">
-          <p class="elements__name">Домбай</p>
-          <div class="elements__like-button"></div>
+          <h2 class="elements__name">Домбай</h2>
+          <button class="elements__like-button" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img class="elements__photo" src="./images/kirill-pershin-elbrus.png" alt="Гора Эльбрус. Фото Кирилла Першина">
         <div class="elements__description">
-          <p class="elements__name">Гора Эльбрус</p>
-          <div class="elements__like-button"></div>
+          <h2 class="elements__name">Гора Эльбрус</h2>
+          <button class="elements__like-button" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img class="elements__photo" src="./images/kirill-pershin-dombay.png" alt="Домбай. Фото Кирилла Першина">
         <div class="elements__description">
-          <p class="elements__name">Домбай</p>
-          <div class="elements__like-button"></div>
+          <h2 class="elements__name">Домбай</h2>
+          <button class="elements__like-button" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img class="elements__photo" src="./images/kirill-pershin-karachaevsk.png" alt="Карачаевск. Фото Кирилла Першина">
         <div class="elements__description">
-          <p class="elements__name">Карачаево-Черкессия</p>
-          <div class="elements__like-button"></div>
+          <h2 class="elements__name">Карачаево-Черкессия</h2>
+          <button class="elements__like-button" type="button"></button>
         </div>
       </div>
     </section>
   </main>
   <footer class="footer">
-    <p class="footer__copyright">&copy 2020 Mesto Russia</p>
+    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup popup_hidden">
-    <form class="popup__container">
-      <div class="popup__close-button"></div>
-      <!-- <svg class="popup__close-button" width="58" height="58" viewbox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M41.5709 13.2865L29.0001 25.8573L16.4293 13.2865L13.2866 16.4292L25.8574 29L13.2866 41.5708L16.4293 44.7135L29.0001 32.1427L41.5709 44.7135L44.7136 41.5708L32.1428 29L44.7136 16.4292L41.5709 13.2865Z" fill="white"/>
-        </svg> -->
+  <div class="popup">
+    <div class="popup__union">
+      <button class="popup__close-button" type="button"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
-      <input class="popup__input popup__input_content_name" type="text" value="">
-      <input class="popup__input popup__input_content_profession" type="text" value="">
-      <button class="popup__save-button">Сохранить</button>
-    </form>
+      <form class="popup__container" name="edit-form">
+        <input class="popup__input popup__input_content_name" name="input-name" type="text" value="" placeholder="Ваше имя">
+        <input class="popup__input popup__input_content_profession" name="input-profession" type="text" value="" placeholder="Ваша профессия">
+        <button class="popup__save-button" type="submit">Сохранить</button>
+      </form>
+    </div>
   </div>
-  <script src="./blocks/elements/__like-button/like-button.js"></script>
-  <script src="./blocks/popup/popup.js"></script> 
+  <script src="./scripts/index.js"></script> 
 </body>
 </html>

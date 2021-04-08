@@ -8,9 +8,17 @@
   margin: auto;
   border-radius: 2px;
   border: none;
+  transition: opacity .1s linear;
 }
 
 .popup__save-button:hover {
   opacity: .8;
   cursor: pointer;
+}
+
+@media screen and (max-width: 920px) {
+  .popup__save-button {
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
