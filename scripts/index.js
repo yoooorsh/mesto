@@ -23,7 +23,7 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
-  popup.classList.remove('popup_visible');
+  closePopupHandler();
 }
 
 profileEditButton.addEventListener('click', openPopupHandler);

@@ -12,5 +12,6 @@
 @media screen and (max-width: 920px) {
   .popup__union {
     width: 282px;
+    padding: 0 25px;
   }
 }

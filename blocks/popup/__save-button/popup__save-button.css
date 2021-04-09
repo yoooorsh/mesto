@@ -6,6 +6,7 @@
   line-height: 22px;
   text-align: center;
   margin: auto;
+  margin-top: 5px;
   border-radius: 2px;
   border: none;
   transition: opacity .1s linear;
