@@ -3,4 +3,6 @@
   border-radius: 4%;
   width: 282px;
   min-height: 361px;
+  overflow: hidden;
+  position: relative;
 }
