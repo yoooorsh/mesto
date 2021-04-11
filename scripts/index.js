@@ -48,6 +48,12 @@ const inputPlace = popupAddCard.querySelector('.popup__input_content_place');
 const inputImgUrl = popupAddCard.querySelector('.popup__input_content_img-url');
 const addForm = popupAddCard.querySelector('.popup__container');
 
+//получаем элементы для модального окна просмотра фотографии
+const popupViewPhoto = document.querySelector('.popup_content_view-photo');
+const popupViewPhotoCloseButton = popupViewPhoto.querySelector('.popup__close-button');
+const popupPhoto = popupViewPhoto.querySelector('.popup__photo');
+const popupPhotoName = popupViewPhoto.querySelector('.popup__photo-name');
+
 //функция создания карточки, возвращает элемент, готовый для встраивания.
 //принимает значения: name - название места и link - ссылка на фото
 function createCard(name, link) {
@@ -66,6 +72,13 @@ function createCard(name, link) {
     const cardElementToDelete = deleteButton.closest('.elements__element');
     cardElementToDelete.remove();
   })
+
+  const cardPhoto = cardElement.querySelector('.elements__photo');
+  cardPhoto.addEventListener('click', function() {
+    popupPhoto.src = link;
+    popupPhotoName.textContent = name;
+    popupViewPhoto.classList.add('popup_visible');
+  });
 
   return cardElement;
 }
@@ -104,8 +117,15 @@ function closeAddCardPopupHandler() {
 function formSubmitCardHandler(evt) {
   evt.preventDefault();
   cardElement = createCard(inputPlace.value, inputImgUrl.value);
+  inputPlace.value = "";
+  inputImgUrl.value = "";
   cardElements.prepend(cardElement);
   closeAddCardPopupHandler();
+}
+
+//функция закрытия окна просмотра фото
+function closePopupViewPhoto() {
+  popupViewPhoto.classList.remove('popup_visible');
 }
 
 //отображаем карточки из массива
@@ -131,3 +151,6 @@ popupAddCardCloseButton.addEventListener('click', closeAddCardPopupHandler);
 
 //кнопка отправки формы модального окна добавления карточки
 addForm.addEventListener('submit', formSubmitCardHandler);
+
+//кнопка закрытия модального окна просмотра фото
+popupViewPhotoCloseButton.addEventListener('click', closePopupViewPhoto);

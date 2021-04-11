@@ -1,0 +1,9 @@
+.popup__content {
+  background-color: transparent;
+  max-width: 75vw;
+  background-size: cover;
+  position: relative;
+  margin: auto;
+  box-sizing: border-box;
+  position: relative;
+}
