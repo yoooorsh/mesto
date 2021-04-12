@@ -25,7 +25,6 @@
 @import url('../blocks/footer/__copyright/footer__copyright.css');
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/_visible/popup_visible.css');
-@import url('../blocks/popup/_opacity/popup_opacity_high.css');
 @import url('../blocks/popup/_opacity/popup_opacity_low.css');
 @import url('../blocks/popup/__union/popup__union.css');
 @import url('../blocks/popup/__close-button/popup__close-button.css');

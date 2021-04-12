@@ -25,39 +25,30 @@
       <button class="profile__add-button" type="button"></button>
     </section>
     <section class="elements">
-      <template id="element">
-        <div class="elements__element">
-          <img class="elements__photo" src="#" alt="Фото места">
-          <div class="elements__description">
-            <h2 class="elements__name"></h2>
-            <button class="elements__like-button" type="button"></button>
-            <button class="elements__delete-button" type="button"></button>
-          </div>
-        </div>
-      </template>
+      
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup popup_content_edit-profile popup_opacity_high">
+  <div class="popup popup_content_edit-profile">
     <div class="popup__union">
       <button class="popup__close-button" type="button"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
       <form class="popup__container" name="edit-form">
-        <input class="popup__input popup__input_content_name" name="input-name" type="text" value="" placeholder="Ваше имя">
-        <input class="popup__input popup__input_content_profession" name="input-profession" type="text" value="" placeholder="Ваша профессия">
+        <input class="popup__input popup__input_content_name" required name="input-name" type="text" value="" placeholder="Ваше имя">
+        <input class="popup__input popup__input_content_profession" required name="input-profession" type="text" value="" placeholder="Ваша профессия">
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
-  <div class="popup popup_content_add-element popup_opacity_high">
+  <div class="popup popup_content_add-element">
     <div class="popup__union">
       <button class="popup__close-button" type="button"></button>
       <h2 class="popup__header">Новое место</h2>
       <form class="popup__container" name="add-form">
-        <input class="popup__input popup__input_content_place" name="input-place" type="text" value="" placeholder="Название">
-        <input class="popup__input popup__input_content_img-url" name="input-img-url" type="text" value="" placeholder="Ссылка на картинку">
+        <input class="popup__input popup__input_content_place" required name="input-place" type="text" value="" placeholder="Название">
+        <input class="popup__input popup__input_content_img-url" required name="input-img-url" type="url" value="" placeholder="Ссылка на картинку">
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -69,6 +60,17 @@
       <p class="popup__photo-name"></p>
     </div>
   </div>
+  <template id="element">
+    <div class="elements__element">
+      <img class="elements__photo" src="#" alt="Фото места">
+      <div class="elements__description">
+        <h2 class="elements__name"></h2>
+        <button class="elements__like-button" type="button"></button>
+        <button class="elements__delete-button" type="button"></button>
+      </div>
+    </div>
+  </template>
+  <script src="./scripts/initial-cards.js"></script>
   <script src="./scripts/index.js"></script> 
 </body>
 </html>
