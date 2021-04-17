@@ -1,16 +1,16 @@
 //Функция показа ошибки на поле
-function showInputError (formElement, inputElement, errorMessage) {
+function showInputError (formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('popup__input_type_error');
+  inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup__input-error_show');
+  errorElement.classList.add(errorClass);
 };
 
 //Функция скрытия ошибки на поле
-function hideInputError (formElement, inputElement) {
+function hideInputError (formElement, inputElement, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__input_type_error');
-  errorElement.classList.remove('popup__input-error_show');
+  inputElement.classList.remove(inputErrorClass);
+  errorElement.classList.remove(errorClass);
   errorElement.textContent = '';
 };
 
@@ -22,47 +22,47 @@ function hasInvalidInput(inputList) {
 };
 
 //Функция проверки поля формы на валидность: если поле не валидно - отображаем ошибку, если валидно - скрываем
-function checkInputValidity(formElement, inputElement) {
+function checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, inputErrorClass, errorClass);
   }
 };
 
 //Функция переключает состояния кнопки в зависимости от валидности значений полей формы
-function toggleButtonState(inputList, buttonElement) {
+function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if(hasInvalidInput(inputList)) {
     buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add('popup_save-button_disabled');
+    buttonElement.classList.add(inactiveButtonClass);
   } else {
     buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove('popup_save-button_disabled');
+    buttonElement.classList.remove(inactiveButtonClass);
   }
 };
 
 //Функция успановки обработчика события input на поля полученной формы
-function setEventListeners(formElement) {
+function setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
   //Выбираем все поля полученной формы
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   //Выбираем кнопку отправки полученной формы
-  const buttonElement = formElement.querySelector('.popup__save-button');
+  const buttonElement = formElement.querySelector(submitButtonSelector);
   //Если поля пустые, при открытии формы кнопка неактивна
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   //Для каждого поля формы устанавливаем обработчик события input: проверка на валидность и переключение активности кнопки
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
+      toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     });
   });
 };
 
 //Функция сбрасывает стандартное поведение отправки для форм 
 //и запускает функцию установки обработчиков события input всем полям формы
-function enableValidation() {
+function enableValidation(settingsObj) {
   //Выбираем все формы на документе
-  const formList = Array.from(document.querySelectorAll('.popup__container'));
+  const formList = Array.from(document.querySelectorAll(settingsObj.formSelector));
   //Для каждой формы
   formList.forEach((formElement) => {
     //сбрасываем стандартное поведение отправки формы
@@ -70,14 +70,14 @@ function enableValidation() {
       evt.preventDefault();
     });
     //получаем группы полей формы
-    const fieldsetList = Array.from(formElement.querySelectorAll('.popup__fieldset'));
+    const fieldsetList = Array.from(formElement.querySelectorAll(settingsObj.fieldsetSelector));
     //устанавливаем каждой группе полей обработчик события input
     fieldsetList.forEach(fieldset => {
-      setEventListeners(fieldset);
+      setEventListeners(fieldset, settingsObj.inputSelector, settingsObj.submitButtonSelector, settingsObj.inactiveButtonClass, settingsObj.inputErrorClass, settingsObj.errorClass);
     });
   });
 };
 
-enableValidation();
+enableValidation(settingsElems);
 
 
