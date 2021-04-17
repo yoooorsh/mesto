@@ -35,9 +35,15 @@
     <div class="popup__union">
       <button class="popup__close-button" type="button"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
-      <form class="popup__container" name="edit-form">
-        <input class="popup__input popup__input_content_name" required name="input-name" type="text" value="" placeholder="Ваше имя">
-        <input class="popup__input popup__input_content_profession" required name="input-profession" type="text" value="" placeholder="Ваша профессия">
+      <form class="popup__container" name="edit-form" novalidate>
+        <div class="popup__field">
+          <input class="popup__input popup__input_content_name" id="name-input" required name="input-name" type="text" value="" placeholder="Ваше имя">
+          <span class="popup__input-error name-input-error">Вы пропустили это поле</span>
+        </div>
+        <div class="popup__field">
+          <input class="popup__input popup__input_content_profession" id="profession-input" required name="input-profession" type="text" value="" placeholder="Ваша профессия">
+          <span class="popup__input-error profession-input-error">Вы пропустили это поле</span>
+        </div>
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -46,9 +52,15 @@
     <div class="popup__union">
       <button class="popup__close-button" type="button"></button>
       <h2 class="popup__header">Новое место</h2>
-      <form class="popup__container" name="add-form">
-        <input class="popup__input popup__input_content_place" required name="input-place" type="text" value="" placeholder="Название">
-        <input class="popup__input popup__input_content_img-url" required name="input-img-url" type="url" value="" placeholder="Ссылка на картинку">
+      <form class="popup__container" name="add-form" novalidate>
+        <div class="popup__field">
+          <input class="popup__input popup__input_content_place" id="place-input" required name="input-place" type="text" value="" placeholder="Название">
+          <span class="popup__input-error place-input-error">Вы пропустили это поле</span>
+        </div>
+        <div class="popup__field">
+          <input class="popup__input popup__input_content_img-url" id="img-url-input" required name="input-img-url" type="url" value="" placeholder="Ссылка на картинку">
+          <span class="popup__input-error img-url-input-error">Вы пропустили это поле</span>
+        </div>
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -71,6 +83,7 @@
     </div>
   </template>
   <script src="./scripts/initial-cards.js"></script>
-  <script src="./scripts/index.js"></script> 
+  <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
