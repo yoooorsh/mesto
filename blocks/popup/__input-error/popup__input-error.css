@@ -2,7 +2,6 @@
   color: red;
   font-size: 12px;
   line-height: 15px;
-  display: block;
+  display: none;
   margin-top: 5px;
-  visibility: hidden;
 }
