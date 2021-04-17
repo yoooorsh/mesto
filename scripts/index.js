@@ -1,3 +1,14 @@
+//Настройки элементов
+const settingsElems = {
+  formSelector: '.popup__container',
+  fieldsetSelector: '.popup__fieldset',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup_save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_show'
+}
+
 //получаем шаблон с разметкой для одного элемента (карточки) и контейнер для элементов
 const cardTemplate = document.querySelector('#element').content.querySelector('.elements__element');
 const cardElements = document.querySelector('.elements');
@@ -25,6 +36,9 @@ const popupViewPhoto = document.querySelector('.popup_content_view-photo');
 const popupViewPhotoCloseButton = popupViewPhoto.querySelector('.popup__close-button');
 const popupPhoto = popupViewPhoto.querySelector('.popup__photo');
 const popupPhotoName = popupViewPhoto.querySelector('.popup__photo-name');
+
+//получаем все модальные окна в документе
+const popupArr = Array.from(document.querySelectorAll('.popup'));
 
 //функция создания карточки, возвращает элемент, готовый для встраивания.
 //принимает значения: name - название места и link - ссылка на фото
@@ -116,6 +130,23 @@ function handleViewPhotoPopupClose() {
   closePopup(popupViewPhoto);
 }
 
+//функция закрытия модального окна по нажатию Escape
+function keyEscPopupCloseHandler (evt) {
+  if(evt.key === 'Escape') {
+    const visiblePopup = document.querySelector('.popup_visible');
+    if (visiblePopup) {
+      closePopup(visiblePopup);
+    }
+  }
+ };
+
+//функция закрытия модального окна при клике на его overlay
+function OvrlClickPopupCloseHandler(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
+};
+
 //отображаем карточки из массива
 initialCards.forEach(element => {
   cardElement = createCard(element.name, element.link);
@@ -142,3 +173,12 @@ addForm.addEventListener('submit', handleAddCardFormSubmit);
 
 //кнопка закрытия модального окна просмотра фото
 popupViewPhotoCloseButton.addEventListener('click', handleViewPhotoPopupClose);
+
+//обработка события нажатия на Esc для закрытия модального окна
+document.addEventListener('keydown', keyEscPopupCloseHandler);
+
+//обработка события нажатия на overlay для всех модальных окон в документе, закрывает модальное окно
+popupArr.forEach(popup => {
+  popup.addEventListener('click', OvrlClickPopupCloseHandler);
+ });
+
