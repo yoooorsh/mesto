@@ -38,7 +38,7 @@ const popupPhoto = popupViewPhoto.querySelector('.popup__photo');
 const popupPhotoName = popupViewPhoto.querySelector('.popup__photo-name');
 
 //получаем все модальные окна в документе
-const popupArr = Array.from(document.querySelectorAll('.popup'));
+const popupsArr = Array.from(document.querySelectorAll('.popup'));
 
 //функция создания карточки, возвращает элемент, готовый для встраивания.
 //принимает значения: name - название места и link - ссылка на фото
@@ -69,11 +69,15 @@ function createCard(name, link) {
 //функция открытия popup
 function openPopup (popup) {
   popup.classList.add('popup_visible');
+  //добавляем в документ слушатель события закрытия модального окна по Esc
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 //функция закрытия popup
 function closePopup (popup) {
   popup.classList.remove('popup_visible');
+  //удаляем из документа слушатель события закрытия модального окна по Esc
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
 //функция открытия окна редактирования профиля
@@ -81,6 +85,9 @@ function handleEditProfilePopupOpen() {
   openPopup(popupEditProfile);
   inputName.value = profileName.textContent;
   inputProfession.value = profileProfession.textContent;
+  //очищаем сообщения об ошибках
+  hideInputError (editForm, inputName, settingsElems.inputErrorClass, settingsElems.errorClass);
+  hideInputError (editForm, inputProfession, settingsElems.inputErrorClass, settingsElems.errorClass);
 }
 
 //функция закрытия окна редактирования профиля
@@ -98,6 +105,16 @@ function handleProfileFormSubmit(evt) {
 
 //функция открытия окна добавления карточки
 function handleAddCardPopupOpen() {
+  //очищаем форму перед открытием
+  addForm.reset();
+  //скрываем сообщения об ошибках перед открытием
+  hideInputError (addForm, inputPlace, settingsElems.inputErrorClass, settingsElems.errorClass);
+  hideInputError (addForm, inputImgUrl, settingsElems.inputErrorClass, settingsElems.errorClass);
+  //выбираем поля формы и кнопку отправки
+  const inputListAddForm = Array.from(addForm.querySelectorAll(settingsElems.inputSelector));
+  const submitButtonAddForm =  addForm.querySelector(settingsElems.submitButtonSelector);
+  //делаем кнопку неактивной для следующего открытия
+  toggleButtonState(inputListAddForm, submitButtonAddForm, settingsElems.inactiveButtonClass);
   openPopup(popupAddCard);
 }
 
@@ -131,17 +148,15 @@ function handleViewPhotoPopupClose() {
 }
 
 //функция закрытия модального окна по нажатию Escape
-function keyEscPopupCloseHandler (evt) {
+function closePopupByEsc (evt) {
   if(evt.key === 'Escape') {
     const visiblePopup = document.querySelector('.popup_visible');
-    if (visiblePopup) {
-      closePopup(visiblePopup);
-    }
+    closePopup(visiblePopup);
   }
  };
 
 //функция закрытия модального окна при клике на его overlay
-function OvrlClickPopupCloseHandler(evt) {
+function closePopupByOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
     closePopup(evt.target);
   }
@@ -174,11 +189,8 @@ addForm.addEventListener('submit', handleAddCardFormSubmit);
 //кнопка закрытия модального окна просмотра фото
 popupViewPhotoCloseButton.addEventListener('click', handleViewPhotoPopupClose);
 
-//обработка события нажатия на Esc для закрытия модального окна
-document.addEventListener('keydown', keyEscPopupCloseHandler);
-
 //обработка события нажатия на overlay для всех модальных окон в документе, закрывает модальное окно
-popupArr.forEach(popup => {
-  popup.addEventListener('click', OvrlClickPopupCloseHandler);
+popupsArr.forEach(popup => {
+  popup.addEventListener('click', closePopupByOverlay);
  });
 
