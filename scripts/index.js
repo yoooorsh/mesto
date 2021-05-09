@@ -1,9 +1,8 @@
-//import { FormValidator } from "./FormValidator.js";
-import { initialCards } from "./initial-cards.js";
-import { hideInputError, toggleButtonState } from "./validate.js";
-import { settingsElems } from "./settings.js";
+import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
-import { openPopup, closePopup } from "./popup-helpers.js";
+import { initialCards } from "./initial-cards.js";
+import { settingsElems } from "./settings.js";
+import { openPopup, closePopup } from "./popup-helpers.js"
 
 //получаем контейнер для элементов
 const cardElements = document.querySelector('.elements');
@@ -35,12 +34,11 @@ const popupsArr = Array.from(document.querySelectorAll('.popup'));
 
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {
+  const validatorEditForm = new FormValidator(settingsElems, editForm);
+  validatorEditForm.enableValidation();
   openPopup(popupEditProfile);
   inputName.value = profileName.textContent;
   inputProfession.value = profileProfession.textContent;
-  //очищаем сообщения об ошибках
-  hideInputError (editForm, inputName, settingsElems.inputErrorClass, settingsElems.errorClass);
-  hideInputError (editForm, inputProfession, settingsElems.inputErrorClass, settingsElems.errorClass);
 }
 
 //функция закрытия окна редактирования профиля
@@ -60,14 +58,8 @@ function handleProfileFormSubmit(evt) {
 function handleAddCardPopupOpen() {
   //очищаем форму перед открытием
   addForm.reset();
-  //скрываем сообщения об ошибках перед открытием
-  hideInputError (addForm, inputPlace, settingsElems.inputErrorClass, settingsElems.errorClass);
-  hideInputError (addForm, inputImgUrl, settingsElems.inputErrorClass, settingsElems.errorClass);
-  //выбираем поля формы и кнопку отправки
-  const inputListAddForm = Array.from(addForm.querySelectorAll(settingsElems.inputSelector));
-  const submitButtonAddForm =  addForm.querySelector(settingsElems.submitButtonSelector);
-  //делаем кнопку неактивной для следующего открытия
-  toggleButtonState(inputListAddForm, submitButtonAddForm, settingsElems.inactiveButtonClass);
+  const validatorAddForm = new FormValidator(settingsElems, addForm);
+  validatorAddForm.enableValidation();
   openPopup(popupAddCard);
 }
 
@@ -79,7 +71,6 @@ function handleAddCardPopupClose() {
 //функция отправки формы добавления карточки
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  //const cardElement = createCard(inputPlace.value, inputImgUrl.value);
   const card = new Card(inputPlace.value, inputImgUrl.value, '#element');
   addForm.reset();
   cardElements.prepend(card.createCard());
