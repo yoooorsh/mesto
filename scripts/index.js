@@ -1,11 +1,11 @@
-//import { Card } from "./Card.js";
 //import { FormValidator } from "./FormValidator.js";
 import { initialCards } from "./initial-cards.js";
 import { hideInputError, toggleButtonState } from "./validate.js";
 import { settingsElems } from "./settings.js";
+import { Card } from "./Card.js";
+import { openPopup, closePopup } from "./popup-helpers.js";
 
-//получаем шаблон с разметкой для одного элемента (карточки) и контейнер для элементов
-const cardTemplate = document.querySelector('#element').content.querySelector('.elements__element');
+//получаем контейнер для элементов
 const cardElements = document.querySelector('.elements');
 
 //получаем элементы для модального окна редактирования профиля
@@ -29,51 +29,9 @@ const addForm = popupAddCard.querySelector('.popup__container');
 //получаем элементы для модального окна просмотра фотографии
 const popupViewPhoto = document.querySelector('.popup_content_view-photo');
 const popupViewPhotoCloseButton = popupViewPhoto.querySelector('.popup__close-button');
-const popupPhoto = popupViewPhoto.querySelector('.popup__photo');
-const popupPhotoName = popupViewPhoto.querySelector('.popup__photo-name');
 
 //получаем все модальные окна в документе
 const popupsArr = Array.from(document.querySelectorAll('.popup'));
-
-//функция создания карточки, возвращает элемент, готовый для встраивания.
-//принимает значения: name - название места и link - ссылка на фото
-function createCard(name, link) {
-  const cardElement = cardTemplate.cloneNode(true);
-  
-  cardElement.querySelector('.elements__name').textContent = name;
-  cardElement.querySelector('.elements__photo').src = link;
-  cardElement.querySelector('.elements__photo').alt = name;
-  
-  const likeButton = cardElement.querySelector('.elements__like-button');
-  likeButton.addEventListener('click', handleLikeButtoActive);
-
-  const deleteButton = cardElement.querySelector('.elements__delete-button');
-  deleteButton.addEventListener('click', handleCardDelete)
-
-  const cardPhoto = cardElement.querySelector('.elements__photo');
-  cardPhoto.addEventListener('click', function() {
-    popupPhoto.src = link;
-    popupPhoto.alt = name;
-    popupPhotoName.textContent = name;
-    openPopup(popupViewPhoto);
-  });
-
-  return cardElement;
-}
-
-//функция открытия popup
-function openPopup (popup) {
-  popup.classList.add('popup_visible');
-  //добавляем в документ слушатель события закрытия модального окна по Esc
-  document.addEventListener('keydown', closePopupByEsc);
-}
-
-//функция закрытия popup
-function closePopup (popup) {
-  popup.classList.remove('popup_visible');
-  //удаляем из документа слушатель события закрытия модального окна по Esc
-  document.removeEventListener('keydown', closePopupByEsc);
-}
 
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {
@@ -121,34 +79,17 @@ function handleAddCardPopupClose() {
 //функция отправки формы добавления карточки
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  const cardElement = createCard(inputPlace.value, inputImgUrl.value);
+  //const cardElement = createCard(inputPlace.value, inputImgUrl.value);
+  const card = new Card(inputPlace.value, inputImgUrl.value, '#element');
   addForm.reset();
-  cardElements.prepend(cardElement);
+  cardElements.prepend(card.createCard());
   closePopup(popupAddCard);
-}
-
-//функция лайка на карточку
-function handleLikeButtoActive(evt) {
-  evt.target.classList.toggle('elements__like-button_active');
-}
-
-//функция удаления карточки
-function handleCardDelete(evt) {
-  evt.target.closest('.elements__element').remove();
 }
 
 //функция закрытия окна просмотра фото
 function handleViewPhotoPopupClose() {
   closePopup(popupViewPhoto);
 }
-
-//функция закрытия модального окна по нажатию Escape
-function closePopupByEsc (evt) {
-  if(evt.key === 'Escape') {
-    const visiblePopup = document.querySelector('.popup_visible');
-    closePopup(visiblePopup);
-  }
- }
 
 //функция закрытия модального окна при клике на его overlay
 function closePopupByOverlay(evt) {
@@ -159,8 +100,9 @@ function closePopupByOverlay(evt) {
 
 //отображаем карточки из массива
 initialCards.forEach(element => {
-  const cardElement = createCard(element.name, element.link);
-  cardElements.append(cardElement); 
+  // const cardElement = createCard(element.name, element.link);
+  const card = new Card(element.name, element.link, '#element');
+  cardElements.append(card.createCard()); 
 });
 
 //кнопка редактирования профиля
@@ -188,4 +130,3 @@ popupViewPhotoCloseButton.addEventListener('click', handleViewPhotoPopupClose);
 popupsArr.forEach(popup => {
   popup.addEventListener('click', closePopupByOverlay);
  });
-
