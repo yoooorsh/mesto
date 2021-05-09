@@ -1,13 +1,8 @@
-//Настройки элементов
-const settingsElems = {
-  formSelector: '.popup__container',
-  fieldsetSelector: '.popup__fieldset',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup_save-button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_show'
-}
+//import { Card } from "./Card.js";
+//import { FormValidator } from "./FormValidator.js";
+import { initialCards } from "./initial-cards.js";
+import { hideInputError, toggleButtonState } from "./validate.js";
+import { settingsElems } from "./settings.js";
 
 //получаем шаблон с разметкой для одного элемента (карточки) и контейнер для элементов
 const cardTemplate = document.querySelector('#element').content.querySelector('.elements__element');
@@ -126,7 +121,7 @@ function handleAddCardPopupClose() {
 //функция отправки формы добавления карточки
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  cardElement = createCard(inputPlace.value, inputImgUrl.value);
+  const cardElement = createCard(inputPlace.value, inputImgUrl.value);
   addForm.reset();
   cardElements.prepend(cardElement);
   closePopup(popupAddCard);
@@ -153,18 +148,18 @@ function closePopupByEsc (evt) {
     const visiblePopup = document.querySelector('.popup_visible');
     closePopup(visiblePopup);
   }
- };
+ }
 
 //функция закрытия модального окна при клике на его overlay
 function closePopupByOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
     closePopup(evt.target);
   }
-};
+}
 
 //отображаем карточки из массива
 initialCards.forEach(element => {
-  cardElement = createCard(element.name, element.link);
+  const cardElement = createCard(element.name, element.link);
   cardElements.append(cardElement); 
 });
 

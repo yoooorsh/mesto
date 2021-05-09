@@ -1,3 +1,5 @@
+import { settingsElems } from "./settings.js";
+
 //Функция показа ошибки на поле
 function showInputError (formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -7,7 +9,7 @@ function showInputError (formElement, inputElement, errorMessage, inputErrorClas
 };
 
 //Функция скрытия ошибки на поле
-function hideInputError (formElement, inputElement, inputErrorClass, errorClass) {
+export function hideInputError (formElement, inputElement, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(inputErrorClass);
   errorElement.classList.remove(errorClass);
@@ -31,7 +33,7 @@ function checkInputValidity(formElement, inputElement, inputErrorClass, errorCla
 };
 
 //Функция переключает состояния кнопки в зависимости от валидности значений полей формы
-function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
+export function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if(hasInvalidInput(inputList)) {
     buttonElement.setAttribute('disabled', true);
     buttonElement.classList.add(inactiveButtonClass);
@@ -58,26 +60,25 @@ function setEventListeners(formElement, inputSelector, submitButtonSelector, ina
   });
 };
 
-//Функция сбрасывает стандартное поведение отправки для форм 
+//Функция сбрасывает стандартное поведение отправки для формы, полученной в параметре, 
 //и запускает функцию установки обработчиков события input всем полям формы
-function enableValidation(settingsObj) {
-  //Выбираем все формы на документе
-  const formList = Array.from(document.querySelectorAll(settingsObj.formSelector));
-  //Для каждой формы
-  formList.forEach((formElement) => {
-    //сбрасываем стандартное поведение отправки формы
-    formElement.addEventListener('submit', function (evt) {
+function enableValidation(settingsObj, form) {
+    //Сбрасываем стандартное поведение отправки формы
+    form.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
     //получаем группы полей формы
-    const fieldsetList = Array.from(formElement.querySelectorAll(settingsObj.fieldsetSelector));
+    const fieldsetList = Array.from(form.querySelectorAll(settingsObj.fieldsetSelector));
     //устанавливаем каждой группе полей обработчик события input
     fieldsetList.forEach(fieldset => {
       setEventListeners(fieldset, settingsObj.inputSelector, settingsObj.submitButtonSelector, settingsObj.inactiveButtonClass, settingsObj.inputErrorClass, settingsObj.errorClass);
     });
-  });
 };
 
-enableValidation(settingsElems);
-
+//Выбираем все формы на документе
+const formList = Array.from(document.querySelectorAll(settingsElems.formSelector));
+//Для каждой формы запускаем валидацию
+formList.forEach((form) => {
+  enableValidation(settingsElems, form);
+});
 
