@@ -2,10 +2,12 @@ export class FormValidator {
     constructor(settingsObj, form) {
         this._settingsObj = settingsObj;
         this._form = form;
-        //Выбираем кнопку отправки полученной формы
+        //Кнопка отправки полученной формы
         this._buttonElement = this._getSubmitBtn();
-        //получаем группы полей формы
+        //Группы полей формы
         this._fieldsetList = this._getFieldsetList();
+        //Кнопка, по которой открывается окно с формой
+        //this._openBtn = this._getOpenBtn();
     }
 
     //Функция показа ошибки на поле
@@ -69,8 +71,12 @@ export class FormValidator {
     //Функция сбрасывает стандартное поведение отправки для формы, полученной в параметре, 
     //и запускает функцию установки обработчиков события input всем полям формы
     enableValidation() {
-        //предварительно очищаем поля от ошибок с предыдущих открытий окна
-        this._resetError();
+        //На кнопку открытия окна вешаем событие по клику, которое очистит форму от ошибок
+        const openBtn = document.querySelector(this._settingsObj.openFormBtnSelector);
+        openBtn.addEventListener('click', () => {
+            this._resetError();
+        });
+
         //Сбрасываем стандартное поведение отправки формы
         this._form.addEventListener('submit', function (evt) {
             evt.preventDefault();
@@ -92,6 +98,11 @@ export class FormValidator {
         const buttonElement = this._form.querySelector(this._settingsObj.submitButtonSelector);
         return buttonElement;
     }
+
+    // _getOpenBtn() {
+    //     const openBtn = document.querySelector(this._settingsObj.openFormBtnSelector);
+    //     return openBtn;
+    // }
 
     //Функция сброса состояния ошибки с полей формы
     _resetError() {

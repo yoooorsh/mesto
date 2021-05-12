@@ -25,3 +25,4 @@ export const popupViewPhotoCloseButton = popupViewPhoto.querySelector('.popup__c
 
 //получаем все модальные окна в документе
 export const popupsArr = Array.from(document.querySelectorAll('.popup'));
+

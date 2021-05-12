@@ -24,10 +24,12 @@ import {
   popupsArr
  } from "./constants.js";
 
+//создаём объекты валидаторов форм
+const validatorEditForm = new FormValidator({...settingsElems, openFormBtnSelector: '.profile__edit-button'}, editForm);
+const validatorAddForm = new FormValidator({...settingsElems, openFormBtnSelector: '.profile__add-button'}, addForm);
+
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {
-  const validatorEditForm = new FormValidator(settingsElems, editForm);
-  validatorEditForm.enableValidation();
   openPopup(popupEditProfile);
   inputName.value = profileName.textContent;
   inputProfession.value = profileProfession.textContent;
@@ -50,8 +52,6 @@ function handleProfileFormSubmit(evt) {
 function handleAddCardPopupOpen() {
   //очищаем форму перед открытием
   addForm.reset();
-  const validatorAddForm = new FormValidator(settingsElems, addForm);
-  validatorAddForm.enableValidation();
   openPopup(popupAddCard);
 }
 
@@ -83,7 +83,6 @@ function closePopupByOverlay(evt) {
 
 //отображаем карточки из массива
 initialCards.forEach(element => {
-  // const cardElement = createCard(element.name, element.link);
   const card = new Card(element.name, element.link, '#element');
   cardElements.append(card.createCard()); 
 });
@@ -112,4 +111,8 @@ popupViewPhotoCloseButton.addEventListener('click', handleViewPhotoPopupClose);
 //обработка события нажатия на overlay для всех модальных окон в документе, закрывает модальное окно
 popupsArr.forEach(popup => {
   popup.addEventListener('click', closePopupByOverlay);
- });
+});
+
+//запускаем валидацию форм
+validatorEditForm.enableValidation();
+validatorAddForm.enableValidation();
