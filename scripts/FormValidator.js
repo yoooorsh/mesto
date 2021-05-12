@@ -6,8 +6,6 @@ export class FormValidator {
         this._buttonElement = this._getSubmitBtn();
         //Группы полей формы
         this._fieldsetList = this._getFieldsetList();
-        //Кнопка, по которой открывается окно с формой
-        //this._openBtn = this._getOpenBtn();
     }
 
     //Функция показа ошибки на поле
@@ -98,11 +96,6 @@ export class FormValidator {
         const buttonElement = this._form.querySelector(this._settingsObj.submitButtonSelector);
         return buttonElement;
     }
-
-    // _getOpenBtn() {
-    //     const openBtn = document.querySelector(this._settingsObj.openFormBtnSelector);
-    //     return openBtn;
-    // }
 
     //Функция сброса состояния ошибки с полей формы
     _resetError() {
