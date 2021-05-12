@@ -3,34 +3,26 @@ import { Card } from "./Card.js";
 import { initialCards } from "./initial-cards.js";
 import { settingsElems } from "./settings.js";
 import { openPopup, closePopup } from "./popup-helpers.js"
-
-//получаем контейнер для элементов
-const cardElements = document.querySelector('.elements');
-
-//получаем элементы для модального окна редактирования профиля
-const profileEditButton = document.querySelector('.profile__edit-button');
-const popupEditProfile = document.querySelector('.popup_content_edit-profile');
-const popupEditProfileCloseButton = popupEditProfile.querySelector('.popup__close-button');
-const profileName = document.querySelector('.profile__name');
-const profileProfession = document.querySelector('.profile__profession');
-const inputName = popupEditProfile.querySelector('.popup__input_content_name');
-const inputProfession = popupEditProfile.querySelector('.popup__input_content_profession');
-const editForm = popupEditProfile.querySelector('.popup__container');
-
-//получаем элементы для модального окна добавления карточки
-const cardsAddButton = document.querySelector('.profile__add-button');
-const popupAddCard = document.querySelector('.popup_content_add-element');
-const popupAddCardCloseButton = popupAddCard.querySelector('.popup__close-button');
-const inputPlace = popupAddCard.querySelector('.popup__input_content_place');
-const inputImgUrl = popupAddCard.querySelector('.popup__input_content_img-url');
-const addForm = popupAddCard.querySelector('.popup__container');
-
-//получаем элементы для модального окна просмотра фотографии
-const popupViewPhoto = document.querySelector('.popup_content_view-photo');
-const popupViewPhotoCloseButton = popupViewPhoto.querySelector('.popup__close-button');
-
-//получаем все модальные окна в документе
-const popupsArr = Array.from(document.querySelectorAll('.popup'));
+import { 
+  cardElements, 
+  profileEditButton, 
+  popupEditProfile, 
+  popupEditProfileCloseButton,
+  profileName,
+  profileProfession,
+  inputName,
+  inputProfession,
+  editForm,
+  cardsAddButton,
+  popupAddCard,
+  popupAddCardCloseButton,
+  inputPlace,
+  inputImgUrl,
+  addForm,
+  popupViewPhoto,
+  popupViewPhotoCloseButton,
+  popupsArr
+ } from "./constants.js";
 
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {

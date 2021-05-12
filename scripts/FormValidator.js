@@ -103,6 +103,5 @@ export class FormValidator {
             });
         });
     }
-
 }
 
