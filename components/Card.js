@@ -1,4 +1,4 @@
-import { openPopup } from "./popup-helpers.js";
+import { openPopup } from "../utils/popup-helpers.js";
 
 export class Card {
     constructor(name, link, templateSelector) {

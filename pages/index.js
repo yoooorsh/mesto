@@ -1,8 +1,8 @@
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
-import { initialCards } from "./initial-cards.js";
-import { settingsElems } from "./settings.js";
-import { openPopup, closePopup } from "./popup-helpers.js"
+import { FormValidator } from "../components/FormValidator.js";
+import { Card } from "../components/Card.js";
+import { initialCards } from "../utils/initial-cards.js";
+import { settingsElems } from "../utils/settings.js";
+import { openPopup, closePopup } from "../utils/popup-helpers.js"
 import { 
   cardElements, 
   profileEditButton, 
@@ -22,22 +22,27 @@ import {
   popupViewPhoto,
   popupViewPhotoCloseButton,
   popupsArr
- } from "./constants.js";
+ } from "../utils/constants.js";
+import { Popup } from "../components/Popup.js";
 
 //создаём объекты валидаторов форм
 const validatorEditForm = new FormValidator({...settingsElems, openFormBtnSelector: '.profile__edit-button'}, editForm);
 const validatorAddForm = new FormValidator({...settingsElems, openFormBtnSelector: '.profile__add-button'}, addForm);
 
+const editProfilePopup = new Popup('.popup_content_edit-profile');
+
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {
-  openPopup(popupEditProfile);
+  //openPopup(popupEditProfile);
+  editProfilePopup.open();
   inputName.value = profileName.textContent;
   inputProfession.value = profileProfession.textContent;
 }
 
 //функция закрытия окна редактирования профиля
 function handleEditProfilePopupClose() {
-  closePopup(popupEditProfile);
+  //closePopup(popupEditProfile);
+  editProfilePopup.close();
 }
 
 //функция отправки формы редактирования профиля
