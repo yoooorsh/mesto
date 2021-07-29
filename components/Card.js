@@ -1,10 +1,13 @@
 import { openPopup } from "../utils/popup-helpers.js";
+import { PopupWithImage } from "./PopupWithImage.js";
+import { popupViewPhotoSelector } from "../utils/constants.js";
 
 export class Card {
     constructor(name, link, templateSelector) {
         this._name = name;
         this._link = link;
         this._templateSelector = templateSelector;
+        this._popup = new PopupWithImage({name, link}, popupViewPhotoSelector)
     }
 
     //функция получения шаблона с разметкой для одного элемента (карточки)
@@ -45,19 +48,8 @@ export class Card {
     _setEventListenersCardPhoto() {
         const cardPhoto = this._cardElement.querySelector('.elements__photo');
         cardPhoto.addEventListener('click', () => {
-            this._handleCardPhotoOpen();
+            this._popup.open();
         });
-    }
-
-    //функция открытия окна просмотра фото
-    _handleCardPhotoOpen() {
-        const popupViewPhoto = document.querySelector('.popup_content_view-photo');
-        const popupPhoto = popupViewPhoto.querySelector('.popup__photo');
-        const popupPhotoName = popupViewPhoto.querySelector('.popup__photo-name');
-        popupPhoto.src = this._link;
-        popupPhoto.alt = this._name;
-        popupPhotoName.textContent = this._name;
-        openPopup(popupViewPhoto);
     }
   
     //функция лайка на карточку

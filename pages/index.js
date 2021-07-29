@@ -4,79 +4,62 @@ import { initialCards } from "../utils/initial-cards.js";
 import { settingsElems } from "../utils/settings.js";
 import { openPopup, closePopup } from "../utils/popup-helpers.js"
 import { 
-  cardElements, 
-  profileEditButton, 
-  popupEditProfile, 
-  popupEditProfileCloseButton,
-  profileName,
-  profileProfession,
+  cardElementsSelector, 
+  profileEditButtonSelector, 
+  profileNameSelector,
+  profileProfessionSelector,
   inputName,
   inputProfession,
   editForm,
-  cardsAddButton,
-  popupAddCard,
-  popupAddCardCloseButton,
+  cardsAddButtonSelector,
+  popupAddCardSelector,
   inputPlace,
   inputImgUrl,
   addForm,
-  popupViewPhoto,
-  popupViewPhotoCloseButton,
-  popupsArr
+  popupsArr,
+  popupEditProfileSelector
  } from "../utils/constants.js";
-import { Popup } from "../components/Popup.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { Section } from "../components/Section.js";
+import { UserInfo } from "../components/UserInfo.js";
 
 //создаём объекты валидаторов форм
-const validatorEditForm = new FormValidator({...settingsElems, openFormBtnSelector: '.profile__edit-button'}, editForm);
-const validatorAddForm = new FormValidator({...settingsElems, openFormBtnSelector: '.profile__add-button'}, addForm);
+const validatorEditForm = new FormValidator({...settingsElems, openFormBtnSelector: profileEditButtonSelector}, editForm);
+const validatorAddForm = new FormValidator({...settingsElems, openFormBtnSelector: cardsAddButtonSelector}, addForm);
+const userInfo = new UserInfo(profileNameSelector, profileProfessionSelector);
 
-const editProfilePopup = new Popup('.popup_content_edit-profile');
+const cards = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item.name, item.link, '#element');
+    const cardElement = card.createCard();
+    cards.addItem(cardElement);
+  },
+}, cardElementsSelector);
+
+const editProfilePopup = new PopupWithForm(popupEditProfileSelector, (event) => {
+  event.preventDefault();
+  userInfo.setUserInfo(inputName.value, inputProfession.value)
+});
+
+const addCardPopup = new PopupWithForm(popupAddCardSelector, (event) => {
+  event.preventDefault();
+  const card = new Card(inputPlace.value, inputImgUrl.value, '#element');
+  const cardElement = card.createCard();
+  cards.addItemToStart(cardElement);
+});
 
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {
-  //openPopup(popupEditProfile);
   editProfilePopup.open();
-  inputName.value = profileName.textContent;
-  inputProfession.value = profileProfession.textContent;
-}
-
-//функция закрытия окна редактирования профиля
-function handleEditProfilePopupClose() {
-  //closePopup(popupEditProfile);
-  editProfilePopup.close();
-}
-
-//функция отправки формы редактирования профиля
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  profileName.textContent = inputName.value;
-  profileProfession.textContent = inputProfession.value;
-  closePopup(popupEditProfile);
+  const {name, profession} = userInfo.getUserInfo();
+  inputName.value = name;
+  inputProfession.value = profession;
 }
 
 //функция открытия окна добавления карточки
 function handleAddCardPopupOpen() {
-  //очищаем форму перед открытием
-  addForm.reset();
-  openPopup(popupAddCard);
-}
-
-//функция закрытия окна добавления карточки
-function handleAddCardPopupClose() {
-  closePopup(popupAddCard);
-}
-
-//функция отправки формы добавления карточки
-function handleAddCardFormSubmit(evt) {
-  evt.preventDefault();
-  const card = new Card(inputPlace.value, inputImgUrl.value, '#element');
-  addForm.reset();
-  cardElements.prepend(card.createCard());
-  closePopup(popupAddCard);
-}
-
-//функция закрытия окна просмотра фото
-function handleViewPhotoPopupClose() {
-  closePopup(popupViewPhoto);
+  addCardPopup.open();
 }
 
 //функция закрытия модального окна при клике на его overlay
@@ -86,32 +69,15 @@ function closePopupByOverlay(evt) {
   }
 }
 
-//отображаем карточки из массива
-initialCards.forEach(element => {
-  const card = new Card(element.name, element.link, '#element');
-  cardElements.append(card.createCard()); 
-});
+cards.renderItems();
 
 //кнопка редактирования профиля
+const profileEditButton = document.querySelector(profileEditButtonSelector);
 profileEditButton.addEventListener('click', handleEditProfilePopupOpen);
 
-//кнопка закрытия модального окна редактирвоания профиля
-popupEditProfileCloseButton.addEventListener('click', handleEditProfilePopupClose);
-
-//кнопка отправки формы редактирования профиля
-editForm.addEventListener('submit', handleProfileFormSubmit);
-
 //кнопка добавления карточки
+const cardsAddButton = document.querySelector(cardsAddButtonSelector);
 cardsAddButton.addEventListener('click', handleAddCardPopupOpen);
-
-//кнопка закрытия модального окна добавления карточки
-popupAddCardCloseButton.addEventListener('click', handleAddCardPopupClose);
-
-//кнопка отправки формы модального окна добавления карточки
-addForm.addEventListener('submit', handleAddCardFormSubmit);
-
-//кнопка закрытия модального окна просмотра фото
-popupViewPhotoCloseButton.addEventListener('click', handleViewPhotoPopupClose);
 
 //обработка события нажатия на overlay для всех модальных окон в документе, закрывает модальное окно
 popupsArr.forEach(popup => {
