@@ -9,10 +9,6 @@ export class PopupWithForm extends Popup {
     this.close = this.close.bind(this);
   }
 
-  _getInputValues() {
-
-  }
-
   _setEventListeners() {
     super.setEventListeners(this.close);
     this._form.addEventListener('submit', this._formSubmit);
