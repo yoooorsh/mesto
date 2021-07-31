@@ -1,13 +1,9 @@
-import { openPopup } from "../utils/popup-helpers.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { popupViewPhotoSelector } from "../utils/constants.js";
-
 export class Card {
-    constructor(name, link, templateSelector) {
+    constructor(name, link, templateSelector, handleCardClick) {
         this._name = name;
         this._link = link;
         this._templateSelector = templateSelector;
-        this._popup = new PopupWithImage({name, link}, popupViewPhotoSelector)
+        this._handleCardClick = handleCardClick;
     }
 
     //функция получения шаблона с разметкой для одного элемента (карточки)
@@ -48,7 +44,7 @@ export class Card {
     _setEventListenersCardPhoto() {
         const cardPhoto = this._cardElement.querySelector('.elements__photo');
         cardPhoto.addEventListener('click', () => {
-            this._popup.open();
+            this._handleCardClick(this._name, this._link);
         });
     }
   

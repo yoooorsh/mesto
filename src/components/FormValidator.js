@@ -79,6 +79,7 @@ export class FormValidator {
         this._form.addEventListener('submit', function (evt) {
             evt.preventDefault();
         });
+
         //устанавливаем каждой группе полей обработчик события input
         this._fieldsetList.forEach(fieldset => {
             this._setEventListeners(fieldset);
