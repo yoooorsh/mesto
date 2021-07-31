@@ -51,6 +51,7 @@ const addCardPopup = new PopupWithForm(popupAddCardSelector, (event) => {
   addCardPopup.close();
 });
 
+popupWithImage.setEventListeners();
 editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 
