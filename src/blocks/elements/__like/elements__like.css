@@ -1,6 +1,6 @@
-.elements__description {
+.elements__like {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 16px 15px 0 21px;
 }
