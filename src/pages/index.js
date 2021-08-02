@@ -24,7 +24,7 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { Section } from "../components/Section.js";
 import { UserInfo } from "../components/UserInfo.js";
-import { Api } from "../components/Api.js"
+import { api } from "../components/Api.js"
 
 //создаём объекты валидаторов форм
 const validatorEditForm = new FormValidator({...settingsElems, openFormBtnSelector: profileEditButtonSelector}, editForm);
@@ -35,14 +35,6 @@ const popupViewPhoto = new PopupWithImage(popupViewPhotoSelector);
 
 let cards;
 let curUserId;
-
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
-  headers: {
-    authorization: 'febe2ee3-a098-4028-9a86-63d42bc45ba2',
-    'Content-Type': 'application/json'
-  }
-});
 
 api.getInitialCards()
   .then(data => {
@@ -115,13 +107,22 @@ function handleAddCardPopupOpen() {
 }
 
 function createCard(data) {
-  const {owner} = data;
-  const card = new Card(data, '#element', popupViewPhoto.open, () => popupDeleteConfirmation.open(data));
-  const cardElement = card.createCard();
+  const {likes, owner} = data;
+  const isShowDeleteBtn = owner._id === curUserId;
+  const isActiveLikeBtn = likes.some(user => {
+    return user._id === curUserId;
+  });
 
-  if(owner._id != curUserId) {
-    cardElement.querySelector('.elements__delete-button').remove();
-  }
+  const card = new Card(
+    data, 
+    '#element', 
+    popupViewPhoto.open, 
+    () => popupDeleteConfirmation.open(data), 
+    isShowDeleteBtn, 
+    isActiveLikeBtn
+  );
+
+  const cardElement = card.createCard();
 
   return cardElement;
 }
