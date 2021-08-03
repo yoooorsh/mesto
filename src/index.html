@@ -13,7 +13,8 @@
     <section class="profile">
       <div class="profile__container">
         <div class="profile__avatar">
-          <img class="profile__photo" src="<%=require('./images/avatar.jpg')%>" alt="Фото профиля">
+          <img class="profile__photo" src="#" alt="Фото профиля">
+          <button class="profile__avatar-edit-button"></button>
         </div>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -63,7 +64,7 @@
             <input class="popup__input popup__input_content_img-url" id="img-url-input" required name="input-img-url" type="url" value="" placeholder="Ссылка на картинку">
             <span class="popup__input-error img-url-input-error"></span>
           </div>
-          <button class="popup__save-button" type="submit">Сохранить</button>
+          <button class="popup__save-button" type="submit">Создать</button>
         </fieldset>
       </form>
     </div>
@@ -81,6 +82,21 @@
       <h2 class="popup__header">Вы уверены?</h2>
       <form class="popup__container" name="delete-confirmation-form" novalidate>
         <button class="popup__save-button" type="submit">Да</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_content_edit-avatar">
+    <div class="popup__union">
+      <button class="popup__close-button" type="button"></button>
+      <h2 class="popup__header">Обновить аватар</h2>
+      <form class="popup__container" name="edit-avatar" novalidate>
+        <fieldset class="popup__fieldset">
+          <div class="popup__field">
+            <input class="popup__input popup__input_content_avatar-url" id="avatar-url-input" required name="input-avatar-url" type="url" value="" placeholder="Ссылка на фото для аватара">
+            <span class="popup__input-error avatar-url-input-error"></span>
+          </div>
+          <button class="popup__save-button" type="submit">Сохранить</button>
+        </fieldset>
       </form>
     </div>
   </div>

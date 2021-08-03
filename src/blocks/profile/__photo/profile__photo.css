@@ -1,5 +1,6 @@
 .profile__photo {
-  width: auto;
-  height: 100%;
-  margin: 0 -17px;
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  object-fit:cover;
 }

@@ -121,6 +121,25 @@ class Api {
         throw Error(`Api error: ${err}`);
       });
   }
+
+  setAvatarPhoto(photoLink) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: photoLink
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch(err => {
+        throw Error(`Api error: ${err}`);
+      });
+  }
 }
 
 export const api = new Api({

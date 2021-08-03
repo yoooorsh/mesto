@@ -6,11 +6,20 @@ export const profileEditButtonSelector = '.profile__edit-button';
 export const popupEditProfileSelector = '.popup_content_edit-profile';
 export const profileNameSelector = '.profile__name';
 export const profileProfessionSelector = '.profile__profession';
-export const profilePhotoSelector = '.profile__photo';
+
 export const inputName = document.querySelector('.popup__input_content_name');
 export const inputProfession = document.querySelector('.popup__input_content_profession');
 export const editForm = document
   .querySelector(popupEditProfileSelector)
+  .querySelector('.popup__container');
+
+//Селекторы для смены аватара
+export const avatarEditBtnSelector = '.profile__avatar-edit-button';
+export const profilePhotoSelector = '.profile__photo';
+export const popupEditAvatarSelector = '.popup_content_edit-avatar';
+export const inputPhotoUrl = document.querySelector('.popup__input_content_avatar-url');
+export const editAvatarForm = document
+  .querySelector(popupEditAvatarSelector)
   .querySelector('.popup__container');
 
 //получаем элементы для модального окна добавления карточки
