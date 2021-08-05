@@ -8,7 +8,9 @@ export const profileNameSelector = '.profile__name';
 export const profileProfessionSelector = '.profile__profession';
 
 export const inputName = document.querySelector('.popup__input_content_name');
+export const nameInputName = inputName.name;
 export const inputProfession = document.querySelector('.popup__input_content_profession');
+export const nameInputProfession = inputProfession.name;
 export const editForm = document
   .querySelector(popupEditProfileSelector)
   .querySelector('.popup__container');
@@ -17,7 +19,7 @@ export const editForm = document
 export const avatarEditBtnSelector = '.profile__avatar-edit-button';
 export const profilePhotoSelector = '.profile__photo';
 export const popupEditAvatarSelector = '.popup_content_edit-avatar';
-export const inputPhotoUrl = document.querySelector('.popup__input_content_avatar-url');
+export const nameInputPhotoUrl = document.querySelector('.popup__input_content_avatar-url').name;
 export const editAvatarForm = document
   .querySelector(popupEditAvatarSelector)
   .querySelector('.popup__container');
@@ -25,8 +27,8 @@ export const editAvatarForm = document
 //получаем элементы для модального окна добавления карточки
 export const cardsAddButtonSelector = '.profile__add-button';
 export const popupAddCardSelector = '.popup_content_add-element';
-export const inputPlace = document.querySelector('.popup__input_content_place');
-export const inputImgUrl = document.querySelector('.popup__input_content_img-url');
+export const nameInputPlace = document.querySelector('.popup__input_content_place').name;
+export const nameInputImgUrl = document.querySelector('.popup__input_content_img-url').name;
 export const addForm = document
   .querySelector(popupAddCardSelector)
   .querySelector('.popup__container');

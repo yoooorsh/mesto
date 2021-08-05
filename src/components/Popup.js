@@ -32,8 +32,8 @@ export class Popup {
           }
     }
 
-    setEventListeners(callback) {
+    setEventListeners() {
         const closeBtn = this._popup.querySelector('.popup__close-button');
-        closeBtn.addEventListener('click', callback);
+        closeBtn.addEventListener('click', this.close);
     }
 }

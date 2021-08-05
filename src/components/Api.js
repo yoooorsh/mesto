@@ -8,30 +8,14 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   setUserInfo(name, about) {
@@ -43,15 +27,7 @@ class Api {
         about: about
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   addNewCard(name, link) {
@@ -63,15 +39,7 @@ class Api {
         link: link
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   deleteCard(cardId) {
@@ -79,15 +47,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   setLike(cardId) {
@@ -95,15 +55,7 @@ class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   removeLike(cardId) {
@@ -111,15 +63,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
   }
 
   setAvatarPhoto(photoLink) {
@@ -130,15 +74,14 @@ class Api {
         avatar: photoLink
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch(err => {
-        throw Error(`Api error: ${err}`);
-      });
+      .then(this._checkResponse);
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
   }
 }
 

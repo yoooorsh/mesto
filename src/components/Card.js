@@ -90,6 +90,9 @@ export class Card {
       .then(data => {
         this._updateLikes(data.likes.length);
         this._setEventListenersActiveLikeBtn();
+      })
+      .catch(err => {
+        console.log(`Api error: ${err}`);
       });
   }
 
@@ -98,6 +101,9 @@ export class Card {
       .then(data => {
         this._updateLikes(data.likes.length);
         this._setEventListenersInactiveLikeBtn();
+      })
+      .catch(err => {
+        console.log(`Api error: ${err}`);
       });
   }
 

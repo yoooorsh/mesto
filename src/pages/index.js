@@ -8,17 +8,19 @@ import {
   profileNameSelector,
   profileProfessionSelector,
   inputName,
+  nameInputName,
+  nameInputProfession,
   inputProfession,
   editForm,
   avatarEditBtnSelector,
   profilePhotoSelector,
-  inputPhotoUrl,
+  nameInputPhotoUrl,
   popupEditAvatarSelector,
   editAvatarForm,
   cardsAddButtonSelector,
   popupAddCardSelector,
-  inputPlace,
-  inputImgUrl,
+  nameInputPlace,
+  nameInputImgUrl,
   addForm,
   popupEditProfileSelector,
   popupViewPhotoSelector,
@@ -41,37 +43,53 @@ const popupViewPhoto = new PopupWithImage(popupViewPhotoSelector);
 let cards;
 let curUserId;
 
-api.getInitialCards()
-  .then(data => {
+const a = api.getUserInfo();
+const b = api.getInitialCards();
+
+Promise.all([a, b])
+  .then(([initialUserInfo, initialCards]) => {
+    userInfo.setUserInfo(initialUserInfo.name, initialUserInfo.about);
+    userInfo.setAvatarPhoto(initialUserInfo.avatar);
+    curUserId = initialUserInfo._id;
+
     cards = new Section({
-      items: data,
+      items: initialCards,
       renderer: (item) => {
         const cardElement = createCard(item);
         cards.addItem(cardElement);
       },
     }, cardElementsSelector);
     cards.renderItems();
+  })
+  .catch(err => {
+    console.log(`Api error: ${err}`);
   });
 
-const editProfilePopup = new PopupWithForm(popupEditProfileSelector, (event) => {
+const editProfilePopup = new PopupWithForm(popupEditProfileSelector, (event, formValues) => {
   event.preventDefault();
   editProfilePopup.viewLoader(true);
-  api.setUserInfo(inputName.value, inputProfession.value)
+  api.setUserInfo(formValues[nameInputName], formValues[nameInputProfession])
     .then(data => {
       userInfo.setUserInfo(data.name, data.about);
       editProfilePopup.close();
     })
+    .catch(err => {
+      console.log(`Api error: ${err}`);
+    })
     .finally(() => editProfilePopup.viewLoader(false));
 });
 
-const addCardPopup = new PopupWithForm(popupAddCardSelector, (event) => {
+const addCardPopup = new PopupWithForm(popupAddCardSelector, (event, formValues) => {
   event.preventDefault();
   addCardPopup.viewLoader(true);
-  api.addNewCard(inputPlace.value, inputImgUrl.value)
+  api.addNewCard(formValues[nameInputPlace], formValues[nameInputImgUrl])
     .then(data => {
       const cardElement = createCard(data);
       cards.addItemToStart(cardElement);
       addCardPopup.close();
+    })
+    .catch(err => {
+      console.log(`Api error: ${err}`);
     })
     .finally(() => addCardPopup.viewLoader(false));
 });
@@ -87,16 +105,22 @@ const popupDeleteConfirmation = new PopupWithForm(popupDeleteConfirmationSelecto
         document.getElementById(_id).remove();
         popupDeleteConfirmation.close();
       })
+      .catch(err => {
+        console.log(`Api error: ${err}`);
+      })
       .finally(() => popupDeleteConfirmation.viewLoader(false));
   }
 });
 
-const editAvatarPopup = new PopupWithForm(popupEditAvatarSelector, (event) => {
+const editAvatarPopup = new PopupWithForm(popupEditAvatarSelector, (event, formValues) => {
   event.preventDefault();
-  api.setAvatarPhoto(inputPhotoUrl.value)
+  api.setAvatarPhoto(formValues[nameInputPhotoUrl])
     .then(data => {
       userInfo.setAvatarPhoto(data.avatar);
       editAvatarPopup.close();
+    })
+    .catch(err => {
+      console.log(`Api error: ${err}`);
     });
 });
 
@@ -105,14 +129,6 @@ editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 popupDeleteConfirmation.setEventListeners();
 editAvatarPopup.setEventListeners();
-
-api.getUserInfo()
-  .then(data => {
-    document.querySelector(profileNameSelector).textContent = data.name;
-    document.querySelector(profileProfessionSelector).textContent = data.about;
-    document.querySelector(profilePhotoSelector).src = data.avatar;
-    curUserId = data._id;
-  });
 
 //функция открытия окна редактирования профиля
 function handleEditProfilePopupOpen() {
@@ -130,8 +146,6 @@ function handleAddCardPopupOpen() {
 //функция открытия окна редактирования профиля
 function handleEditAvatarPopupOpen() {
   editAvatarPopup.open();
-  const {photoLink} = userInfo.getUserInfo();
-  inputPhotoUrl.value = photoLink;
 }
 
 function createCard(data) {
